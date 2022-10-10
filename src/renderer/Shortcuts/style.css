@@ -1,0 +1,71 @@
+
+.shortcuts{
+  width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 16px 0 8px;
+  flex: 0 0 24px;
+}
+
+.shortcuts ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.shortcuts li {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+}
+
+.shortcuts li.divider{
+  height: 24px;
+  width: 1px;
+  background-color: #D1D1D1;
+  margin-left:12px;
+  margin-right:12px;
+
+}
+
+.shortcuts li.disabled{
+  opacity: 0.32;
+}
+
+
+.shortcuts li span.group {
+display: inline-block;
+margin-left: 12px;
+}
+
+.shortcuts li span.key {
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+
+  width: 24px;
+  height: 24px;
+  display: inline-grid;
+  place-items: center;
+
+  background: rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(40px);
+  border-radius: 4px;
+}
+
+.shortcuts li span.key:not(:last-child) {
+  margin-right: 4px;
+}

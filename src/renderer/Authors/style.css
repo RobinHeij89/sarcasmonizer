@@ -1,0 +1,27 @@
+
+.authors{
+  height: 12px;
+  margin-bottom: 16px;
+  width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  flex: 0 0 12px;
+
+  color: #AEAEB1;
+
+}
+
+.authors a {
+  color: inherit;
+  text-decoration: underline;
+}
