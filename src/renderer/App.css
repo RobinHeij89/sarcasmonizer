@@ -51,7 +51,6 @@ body {
   height: 100%;
 }
 
-
 input[type='text'] {
   width: 100%;
   height: 67px;
@@ -85,10 +84,17 @@ input[type='text']:focus{
   flex-flow: row wrap; 
 }
 
+.history .raw, .history .sarcasm{
+    max-width: 50vw;
+    overflow: hidden;
+    max-height: calc(100vh - 116px);
+  flex: 1; 
+
+}
+
 .history .raw{
-  flex: 1;  
   border-right: 1px solid var(--border-color);
-  padding: 24px;
+  padding: 12px;
   position: relative;
 }
 
@@ -98,9 +104,49 @@ input[type='text']:focus{
   font-size: 12px;
   line-height: 14px;
   color: #AEAEB1;
-  margin: 0;
+  margin: 12px 0 0 12px;
 }
 
+.raw ul, .sarcasm ul{
+  margin: 0;
+  list-style: none;
+  padding:0;
+  max-height: calc(100% - 38px);
+  overflow-y: auto;
+}
+
+.raw li, .sarcasm li{
+  padding: 0 0.8rem;
+  margin:0;
+  display: block;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  height: 35px;
+  line-height: 35px;
+}
+
+.raw li{
+  width: 100%;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.raw li:not(:last-child), .sarcasm li:not(:last-child){
+  margin:0 0 0.8rem;
+}
+
+.raw li.is-active, .sarcasm li.is-active{
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+}
+
+
 .history .sarcasm{
-  flex:  1; 
+  padding: 38px 24px 24px;
+}
+.history .sarcasm p{
+  margin: 0;
 }

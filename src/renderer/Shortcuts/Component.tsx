@@ -1,12 +1,17 @@
+import { hasValue } from 'utils/helpers';
 import './style.css';
 
-export const Shortcuts = () => {
+interface Props {
+  disableExtra: boolean
+}
+
+export const Shortcuts = ({disableExtra}:Props) => {
 
   return (
 
       <div className='shortcuts'>
         <ul>
-          <li className='disabled'>
+          <li className={hasValue(disableExtra) && disableExtra ? 'disabled' : ''}>
             Move up / down in list
             <span className='group'>
               <span className='key'>↓</span>
@@ -15,7 +20,7 @@ export const Shortcuts = () => {
           </li>
           <li className='divider' />
 
-          <li className='disabled'>
+          <li className={hasValue(disableExtra) && disableExtra ? 'disabled' : ''}>
             Copy selected
               <span className='key group'>↩</span>
           </li>

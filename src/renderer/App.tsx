@@ -1,23 +1,69 @@
 import React from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+import { generateSeed, hasValue, makeId, makeSarcastic } from 'utils/helpers';
+import { useLocalStorage } from 'utils/use-local-storage';
 import './App.css';
 import { Authors } from './Authors/Component';
 import { NoHistory } from './NoHistory/Component';
 import { Shortcuts } from './Shortcuts/Component';
 
+interface SarcasticValue {
+  id: string
+  rawValue: string
+  seed: boolean[]
+}
+
 const Sarcasmonizer = () => {
   const [value, setValue] = React.useState("");
-  const [sarcasm, ] = React.useState<number[]>([...Array(20)].map(a => Math.round(Math.random())))
+  const [activeId, setActiveId] = React.useState<string | null>(null)
+  const [items, setItems] = useLocalStorage<SarcasticValue[]>("Sarcasmonizr", []);
+
   const handleKeyPress = React.useCallback((event) => {
+    // console.log(event.code)
     if ((event.metaKey || event.ctrlKey) && event.code === 'Enter') {
         console.log('We fire the Sarcasm')
-        console.log(value.split('').map((val, index) => sarcasm[index % 20] === 0 ? val.toLowerCase() : val.toUpperCase()).join(''))
+        if(value.length > 0){
+          const newId = makeId(10)
+          const newSeed = generateSeed()
+          const obj = makeSarcastic(value, newSeed);
+          navigator.clipboard.writeText(obj);
+          
+          setItems([{
+            id: newId ?? '',
+            rawValue: value,
+            seed: newSeed
+          }, ...items]);
+          setValue('')
+        }
     }else if(event.code === 'Enter'){
         console.log('We fire the Copy')
-        console.log(value)
-        console.log(sarcasm)
+        const item = items.find(item => item.id === activeId)
+        if(hasValue(item)){
+          const obj = makeSarcastic(item.rawValue, item.seed);
+          navigator.clipboard.writeText(obj);
+        }
+    }else if(event.code === 'ArrowUp'){
+        console.log('We fire the ArrowUp')
+        event.preventDefault()
+        runArrowUp();
+    }else if(event.code === 'ArrowDown'){
+        console.log('We fire the ArrowDown')
+        event.preventDefault()
+        runArrowDown()
     }
-  }, [value]);
+  }, [value, activeId]);
+
+  const runArrowDown = () => {
+    const currentIndex = items.findIndex(item => item.id === activeId)
+    const nextIndex = currentIndex === -1 ? 0 : currentIndex === items.length - 1 ? 0 : (currentIndex + 1)
+    setActiveId(items[nextIndex].id ?? '')
+  }
+
+  const runArrowUp = () => {
+    const currentIndex = items.findIndex(item => item.id === activeId)
+    const prevIndex = currentIndex === -1 ? items.length - 1 : (currentIndex === 0) ? items.length - 1 : (currentIndex - 1) 
+    setActiveId(items[prevIndex].id ?? '')
+  }
 
   React.useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
@@ -27,12 +73,19 @@ const Sarcasmonizer = () => {
   }, [handleKeyPress]);
 
   const handleChange = (e: any) => {
+    setActiveId(makeId(10))
     setValue(e.target.value);
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
   }
+
+  React.useEffect(()=>{
+    if(!hasValue(activeId)){
+      setActiveId(makeId(10))
+    }
+  },[])
 
   // React.useEffect(() => {
   //   const sarcasmizer = (value: string) => {
@@ -79,21 +132,42 @@ const Sarcasmonizer = () => {
   //   setValue(sarcasmizer(value));
   // }, [active]);
 
-  
-
   return (
     <div className='content'>
       <form onSubmit={handleSubmit} method='post'>
-        <input type='text' tabIndex={1} placeholder="Write something and make it look saRcAstiC" value={value} onChange={handleChange} />
+        <input autoFocus type='text' tabIndex={1} placeholder="Write something and make it look saRcAstiC" value={value} onChange={handleChange} />
       </form>
       <div className='history'>
         <div className='raw'>
           <h3>Sarcasmonized history</h3>
-          <NoHistory />
+          {Object.entries(items).length === 0 && (<NoHistory />)}
+          {Object.entries(items).length !== 0 && (
+            <ul>
+              {Object.entries(items).map((item: [string, SarcasticValue])=>{
+                const [ key, value] = item;
+                return (
+                  <li key={key} className={activeId === value.id ? 'is-active' : ''}>
+                    {value.rawValue}
+                  </li>
+                )
+              })}
+            </ul>
+          )}
         </div>
-        <div className='sarcasm'>b</div>
+        <div className='sarcasm'>
+          {Object.entries(items).length !== 0 && Object.entries(items).map((item: [string, SarcasticValue])=>{
+              const [ key, value] = item;
+
+              return activeId === value.id ? (
+                <p key={key}>
+                  {makeSarcastic(value.rawValue, value.seed)}
+                </p>
+              ) : (<></>)
+            })
+          }
+        </div>
       </div>
-      <Shortcuts />
+      <Shortcuts disableExtra={items.filter(item => item.id === activeId).length === 0} />
       <Authors />
     </div>
   );
