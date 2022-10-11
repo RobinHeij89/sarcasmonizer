@@ -25,6 +25,6 @@
   align-items: center;
   text-align: center;
   letter-spacing: -0.004em;
-  color: #AEAEB1;
+  color: var( --no-history-color);
   max-width: 200px;
 }

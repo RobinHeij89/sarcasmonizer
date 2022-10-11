@@ -3,28 +3,49 @@
     --background-color:  rgba(255, 255, 255, 0.66);
 
     --text-color: #000000;
+    --input-text-color: #000000;
     --placeholder-color: #AEAEB1;
     --border-color: #D1D1D1;
+    --shortcuts-text-color: #000;
+    --shortcuts-divider-color: #D1D1D1;
+    --author-text-color: #AEAEB1;
+    --no-history-color: #494949;
+
+    --background-li: rgba(0, 0, 0, 0.04);
  }
 
 
- /* @media (prefers-color-scheme: dark) {
+ @media (prefers-color-scheme: dark) {
   :root{
-    --background-color: #282828;
-    --authors-color: rgba(235, 235, 245, 0.3);
-    --text-color: rgba(235, 235, 245, 1);
-    --placeholder-color: rgba(235, 235, 245, 0.3);
+    --background-color: rgba(0, 0, 0, 0.88);
+
+    --text-color: #AEAEB1;
+    --input-text-color: #fff;
+    --placeholder-color: #494949;
+    --border-color: #494949;
+    --shortcuts-text-color: #AEAEB1;
+    --shortcuts-divider-color: #494949;
+    --author-text-color:#494949;
+    --no-history-color: #494949;
+    --background-li:  rgba(255, 255, 255, 0.08);
  }
 }
 
  @media (prefers-color-scheme: light) {
   :root{
-      --background-color: #F6F6F6;
-      --authors-color: rgba(61, 61, 61, 0.32);
-      --text-color: #3D3D3D;
-      --placeholder-color: rgba(61, 61, 61, 0.32);
-  }
-} */
+    --background-color:  rgba(255, 255, 255, 0.66);
+
+    --text-color: #000000;
+    --input-text-color: #000000;
+    --placeholder-color: #AEAEB1;
+    --border-color: #D1D1D1;
+    --shortcuts-text-color: #000;
+    --shortcuts-divider-color: #D1D1D1;
+    --author-text-color: #AEAEB1;
+     --no-history-color: #AEAEB1;
+    --background-li: rgba(0, 0, 0, 0.04);
+}
+} 
 
 *,*::before,*::after{ box-sizing: border-box;}
 
@@ -72,7 +93,7 @@ input[type='text'] {
 
 input[type='text']:focus{
   outline: none;
-  color: var(--text-color);
+  color: var(--input-text-color);
 }
 
 
@@ -103,7 +124,7 @@ input[type='text']:focus{
   font-weight: 600;
   font-size: 12px;
   line-height: 14px;
-  color: #AEAEB1;
+  color: var( --no-history-color);
   margin: 12px 0 0 12px;
 }
 
@@ -124,6 +145,8 @@ input[type='text']:focus{
   line-height: 20px;
   height: 35px;
   line-height: 35px;
+    color: var(--input-text-color);
+
 }
 
 .raw li{
@@ -138,8 +161,8 @@ input[type='text']:focus{
   margin:0 0 0.8rem;
 }
 
-.raw li.is-active, .sarcasm li.is-active{
-  background: rgba(0, 0, 0, 0.04);
+.raw li.is-active{
+  background: var(--background-li);
   border-radius: 8px;
 }
 
@@ -149,4 +172,6 @@ input[type='text']:focus{
 }
 .history .sarcasm p{
   margin: 0;
+      color: var(--input-text-color);
+
 }
