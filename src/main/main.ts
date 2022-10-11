@@ -11,7 +11,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, Notification } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -75,14 +75,14 @@ const createWindow = async () => {
     show: false,
     width: 880,
     height: 582,
-    resizable: false, 
+    resizable: false,
     titleBarStyle: 'default',
-  transparent: true,
-  frame: false,
-  titleBarOverlay: {
-    color: '#2f3241',
-    symbolColor: '#74b1be'
-  },
+    transparent: true,
+    frame: false,
+    titleBarOverlay: {
+      color: '#2f3241',
+      symbolColor: '#74b1be'
+    },
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -104,6 +104,7 @@ const createWindow = async () => {
       mainWindow.show();
     }
   });
+
 
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -127,6 +128,7 @@ const createWindow = async () => {
   // eslint-disable-next-line
   new AppUpdater();
 };
+
 
 /**
  * Add event listeners...

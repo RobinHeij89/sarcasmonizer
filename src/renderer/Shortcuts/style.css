@@ -61,7 +61,8 @@ margin-left: 12px;
   display: inline-grid;
   place-items: center;
 
-  background: rgba(0, 0, 0, 0.04);
+  background: var(--shortcuts-background-color);
+  
   backdrop-filter: blur(40px);
   border-radius: 4px;
 }

@@ -8,6 +8,7 @@
     --border-color: #D1D1D1;
     --shortcuts-text-color: #000;
     --shortcuts-divider-color: #D1D1D1;
+    --shortcuts-background-color: rgba(0, 0, 0, 0.04);
     --author-text-color: #AEAEB1;
     --no-history-color: #494949;
 
@@ -25,6 +26,7 @@
     --border-color: #494949;
     --shortcuts-text-color: #AEAEB1;
     --shortcuts-divider-color: #494949;
+    --shortcuts-background-color: rgba(255, 255, 255, 0.12);
     --author-text-color:#494949;
     --no-history-color: #494949;
     --background-li:  rgba(255, 255, 255, 0.08);
@@ -41,6 +43,7 @@
     --border-color: #D1D1D1;
     --shortcuts-text-color: #000;
     --shortcuts-divider-color: #D1D1D1;
+    --shortcuts-background-color: rgba(0, 0, 0, 0.04);
     --author-text-color: #AEAEB1;
      --no-history-color: #AEAEB1;
     --background-li: rgba(0, 0, 0, 0.04);

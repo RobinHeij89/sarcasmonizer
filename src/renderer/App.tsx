@@ -7,13 +7,20 @@ import { Authors } from './Authors/Component';
 import { NoHistory } from './NoHistory/Component';
 import { Shortcuts } from './Shortcuts/Component';
 
+
+
 interface SarcasticValue {
   id: string
   rawValue: string
   seed: boolean[]
 }
 
-const Sarcasmonizer = () => {
+interface Props {
+  notification: () => void
+}
+
+
+const Sarcasmonizer = (props: Props) => {
   const [value, setValue] = React.useState("");
   const [activeId, setActiveId] = React.useState<string | null>(null)
   const [items, setItems] = useLocalStorage<SarcasticValue[]>("Sarcasmonizr", []);
@@ -21,35 +28,64 @@ const Sarcasmonizer = () => {
   const handleKeyPress = React.useCallback((event) => {
     // console.log(event.code)
     if ((event.metaKey || event.ctrlKey) && event.code === 'Enter') {
-        console.log('We fire the Sarcasm')
-        if(value.length > 0){
-          const newId = makeId(10)
-          const newSeed = generateSeed()
-          const obj = makeSarcastic(value, newSeed);
-          navigator.clipboard.writeText(obj);
-          
-          setItems([{
-            id: newId ?? '',
-            rawValue: value,
-            seed: newSeed
-          }, ...items]);
-          setValue('')
-        }
-    }else if(event.code === 'Enter'){
-        console.log('We fire the Copy')
-        const item = items.find(item => item.id === activeId)
-        if(hasValue(item)){
-          const obj = makeSarcastic(item.rawValue, item.seed);
-          navigator.clipboard.writeText(obj);
-        }
-    }else if(event.code === 'ArrowUp'){
-        console.log('We fire the ArrowUp')
-        event.preventDefault()
-        runArrowUp();
-    }else if(event.code === 'ArrowDown'){
-        console.log('We fire the ArrowDown')
-        event.preventDefault()
-        runArrowDown()
+      console.log('We fire the Sarcasm')
+      if (value.length > 0) {
+        const newId = makeId(10)
+        const newSeed = generateSeed()
+        const obj = makeSarcastic(value, newSeed);
+        navigator.clipboard.writeText(obj);
+        props.notification()
+
+        setItems([{
+          id: newId ?? '',
+          rawValue: value,
+          seed: newSeed
+        }, ...items]);
+        setValue('')
+      }
+    } else if ((event.metaKey || event.ctrlKey) && event.code === 'Slash') {
+      console.log('We fire the ReSarcasm')
+      event.preventDefault();
+      const item = items.find(item => item.id === activeId)
+      if (hasValue(item)) {
+        const newSeed = generateSeed()
+        const obj = makeSarcastic(item.rawValue, newSeed);
+        navigator.clipboard.writeText(obj);
+        props.notification()
+
+
+        const newItems = [...items].map(item => {
+
+          if (item.id === activeId) {
+            return {
+              id: item.id,
+              rawValue: item.rawValue,
+              seed: newSeed
+            }
+          }
+
+          return item
+        })
+
+        setItems(newItems);
+
+      }
+    } else if (event.code === 'Enter') {
+      console.log('We fire the Copy')
+      const item = items.find(item => item.id === activeId)
+      if (hasValue(item)) {
+        const obj = makeSarcastic(item.rawValue, item.seed);
+        navigator.clipboard.writeText(obj);
+        props.notification()
+      }
+    } else if (event.code === 'ArrowUp') {
+      console.log('We fire the ArrowUp')
+      event.preventDefault()
+      runArrowUp();
+    } else if (event.code === 'ArrowDown') {
+      console.log('We fire the ArrowDown')
+      event.preventDefault()
+      runArrowDown()
     }
   }, [value, activeId]);
 
@@ -61,7 +97,7 @@ const Sarcasmonizer = () => {
 
   const runArrowUp = () => {
     const currentIndex = items.findIndex(item => item.id === activeId)
-    const prevIndex = currentIndex === -1 ? items.length - 1 : (currentIndex === 0) ? items.length - 1 : (currentIndex - 1) 
+    const prevIndex = currentIndex === -1 ? items.length - 1 : (currentIndex === 0) ? items.length - 1 : (currentIndex - 1)
     setActiveId(items[prevIndex].id ?? '')
   }
 
@@ -81,11 +117,11 @@ const Sarcasmonizer = () => {
     e.preventDefault();
   }
 
-  React.useEffect(()=>{
-    if(!hasValue(activeId)){
+  React.useEffect(() => {
+    if (!hasValue(activeId)) {
       setActiveId(makeId(10))
     }
-  },[])
+  }, [])
 
   // React.useEffect(() => {
   //   const sarcasmizer = (value: string) => {
@@ -143,8 +179,8 @@ const Sarcasmonizer = () => {
           {Object.entries(items).length === 0 && (<NoHistory />)}
           {Object.entries(items).length !== 0 && (
             <ul>
-              {Object.entries(items).map((item: [string, SarcasticValue])=>{
-                const [ key, value] = item;
+              {Object.entries(items).map((item: [string, SarcasticValue]) => {
+                const [key, value] = item;
                 return (
                   <li key={key} className={activeId === value.id ? 'is-active' : ''}>
                     {value.rawValue}
@@ -155,15 +191,15 @@ const Sarcasmonizer = () => {
           )}
         </div>
         <div className='sarcasm'>
-          {Object.entries(items).length !== 0 && Object.entries(items).map((item: [string, SarcasticValue])=>{
-              const [ key, value] = item;
+          {Object.entries(items).length !== 0 && Object.entries(items).map((item: [string, SarcasticValue]) => {
+            const [key, value] = item;
 
-              return activeId === value.id ? (
-                <p key={key}>
-                  {makeSarcastic(value.rawValue, value.seed)}
-                </p>
-              ) : (<></>)
-            })
+            return activeId === value.id ? (
+              <p key={key}>
+                {makeSarcastic(value.rawValue, value.seed)}
+              </p>
+            ) : (<></>)
+          })
           }
         </div>
       </div>
@@ -173,11 +209,11 @@ const Sarcasmonizer = () => {
   );
 };
 
-export default function App() {
+export default function App(props: Props) {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Sarcasmonizer />} />
+        <Route path="/" element={<Sarcasmonizer notification={props.notification} />} />
       </Routes>
     </Router>
   );
