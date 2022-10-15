@@ -2,6 +2,7 @@
   "name": "sarcasmonizer",
   "version": "0.0.1",
   "description": "Let others know you're sarcastic, without hassle",
+  
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
     "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
@@ -96,7 +97,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RobinHeij89/sarcasmonizr.git"
+    "url": "https://github.com/RobinHeij89/sarcasmonizr.git"
   },
   "author": {
     "name": "Robin Heij",
