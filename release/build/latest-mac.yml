@@ -1,0 +1,17 @@
+version: 4.5.0
+files:
+  - url: Sarcasmonizer-4.5.0-arm64-mac.zip
+    sha512: PA0lTzi7NftwdoYbcS8DWv6fTgNJ9Kex0pIF2mXJLpUcTg4kdcJVV+01+dFDgW1YpRB/GvyINFdicOSGaaDOWA==
+    size: 88060211
+  - url: Sarcasmonizer-4.5.0-mac.zip
+    sha512: +oVR/0j4+SXB8nY4ltaQ8wONEmg3D/ojtXXw3fh54M2gwy78irAwFclZ4X+UnENP7o2PpirXhMinxxF1EArY5A==
+    size: 85777044
+  - url: Sarcasmonizer-4.5.0-arm64.dmg
+    sha512: 6oQYdgkVYpIcM2zSD4XcI4Am/aAOOAWMjHKxRHK5OubZ68Zsh17Dl3mXAu0A3SMfMhWyw3AuDsPnPQmi60GMCg==
+    size: 92674451
+  - url: Sarcasmonizer-4.5.0.dmg
+    sha512: BvXMWAFfFKRt1IgvlNzn3OYPkXBMZfinEIRgm5K6z5xLVIdTxdsUUZKf1a3vuJEPthmkCCoLFx5C5kuYuFW7rg==
+    size: 90129591
+path: Sarcasmonizer-4.5.0-arm64-mac.zip
+sha512: PA0lTzi7NftwdoYbcS8DWv6fTgNJ9Kex0pIF2mXJLpUcTg4kdcJVV+01+dFDgW1YpRB/GvyINFdicOSGaaDOWA==
+releaseDate: '2022-02-01T22:51:29.329Z'
