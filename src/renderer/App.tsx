@@ -22,7 +22,7 @@ interface SarcasticValue {
 const Sarcasmonizer = () => {
   const [value, setValue] = React.useState("");
   const [activeId, setActiveId] = React.useState<string | null>(null)
-  const [items, setItems] = useLocalStorage<SarcasticValue[]>("Sarcasmonizr", []);
+  const [items, setItems] = useLocalStorage<SarcasticValue[]>("Sarcasmonizer", []);
   const [shortcutMenuOpen, setShortcutMenuOpen] = React.useState<boolean>(false)
   const [notificationOpen, setNotificationOpen] = React.useState<boolean>(false)
 

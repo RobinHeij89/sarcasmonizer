@@ -11,11 +11,18 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain, Notification } from 'electron';
+import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+
+// require('update-electron-app')()
+require('update-electron-app')({
+  updateInterval: '1 hour',
+  logger: require('electron-log')
+})
+
 
 export default class AppUpdater {
   constructor() {
@@ -76,7 +83,7 @@ const createWindow = async () => {
     width: 880,
     height: 582,
     minWidth: 300,
-    icon: getAssetPath('icon.png'),
+    icon: getAssetPath('icon.icns'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       experimentalFeatures: true
