@@ -1,6 +1,6 @@
 
   :root{
-    --background-color:  rgba(255, 255, 255, 0.66);
+    --background-color: #FDF1ED;
 
     --text-color: #000000;
     --input-text-color: #000000;
@@ -13,12 +13,13 @@
     --no-history-color: #494949;
 
     --background-li: rgba(0, 0, 0, 0.04);
+    --background-li-hover: rgba(0, 0, 0, 0.02);
  }
 
 
  @media (prefers-color-scheme: dark) {
   :root{
-    --background-color: rgba(0, 0, 0, 0.88);
+    --background-color: #131018;
 
     --text-color: #AEAEB1;
     --input-text-color: #fff;
@@ -30,12 +31,14 @@
     --author-text-color:#494949;
     --no-history-color: #494949;
     --background-li:  rgba(255, 255, 255, 0.08);
+    --background-li-hover:  rgba(255, 255, 255, 0.04);
+
  }
 }
 
  @media (prefers-color-scheme: light) {
   :root{
-    --background-color:  rgba(255, 255, 255, 0.66);
+    --background-color:  #FDF1ED;
 
     --text-color: #000000;
     --input-text-color: #000000;
@@ -47,6 +50,7 @@
     --author-text-color: #AEAEB1;
      --no-history-color: #AEAEB1;
     --background-li: rgba(0, 0, 0, 0.04);
+    --background-li-hover: rgba(0, 0, 0, 0.02);
 }
 } 
 
@@ -82,8 +86,8 @@ input[type='text'] {
   border: none;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 
-  padding: 0 25px;
-  line-height: 67px;
+  padding: 15px 25px;
+  line-height: 37px;
   font-weight: 400;
   outline: none;
 
@@ -103,15 +107,19 @@ input[type='text']:focus{
 .history{
   width: 100%;
   border-bottom: 1px solid var(--border-color);
-  flex: auto;    
   display: flex;
   flex-flow: row wrap; 
+}
+
+.history * {
+  user-select: none;
 }
 
 .history .raw, .history .sarcasm{
     max-width: 50vw;
     overflow: hidden;
-    max-height: calc(100vh - 116px);
+    min-height: calc(100vh - 76px - 67px);
+    max-height: calc(100vh - 76px - 67px);
   flex: 1; 
 
 }
@@ -162,6 +170,12 @@ input[type='text']:focus{
 
 .raw li:not(:last-child), .sarcasm li:not(:last-child){
   margin:0 0 0.8rem;
+}
+
+.raw li:hover{
+  background: var(--background-li-hover);
+  cursor:pointer;
+  border-radius: 8px;
 }
 
 .raw li.is-active{

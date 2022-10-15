@@ -2,9 +2,11 @@ import React from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { generateSeed, hasValue, makeId, makeSarcastic } from 'utils/helpers';
 import { useLocalStorage } from 'utils/use-local-storage';
+import useWindowSize from 'utils/use-window-dimensions';
 import './App.css';
 import { Authors } from './Authors/Component';
 import { NoHistory } from './NoHistory/Component';
+import { NotificationElement } from './Notification/Component';
 import { Shortcuts } from './Shortcuts/Component';
 
 
@@ -15,77 +17,121 @@ interface SarcasticValue {
   seed: boolean[]
 }
 
-interface Props {
-  notification: () => void
-}
 
 
-const Sarcasmonizer = (props: Props) => {
+const Sarcasmonizer = () => {
   const [value, setValue] = React.useState("");
   const [activeId, setActiveId] = React.useState<string | null>(null)
   const [items, setItems] = useLocalStorage<SarcasticValue[]>("Sarcasmonizr", []);
+  const [shortcutMenuOpen, setShortcutMenuOpen] = React.useState<boolean>(false)
+  const [notificationOpen, setNotificationOpen] = React.useState<boolean>(false)
+
+  React.useEffect(() => {
+    if (notificationOpen) {
+      let timer1 = setTimeout(() => setNotificationOpen(false), 1000);
+      return () => {
+        clearTimeout(timer1);
+      };
+    }
+    return () => { }
+  }, [notificationOpen]);
+
+  const handleEnterPress = () => {
+    console.log('We fire the Sarcasm')
+    setShortcutMenuOpen(false)
+    if (value.length > 0) {
+      const newId = makeId(10)
+      const newSeed = generateSeed()
+      const obj = makeSarcastic(value, newSeed);
+      navigator.clipboard.writeText(obj);
+      setNotificationOpen(true)
+
+      setItems([{
+        id: newId ?? '',
+        rawValue: value,
+        seed: newSeed
+      }, ...items]);
+      setValue('')
+      setActiveId(newId)
+    }
+  }
+
+  const handleSlashPress = () => {
+    console.log('We fire the ReSarcasm')
+    setShortcutMenuOpen(false)
+    const item = items.find(item => item.id === activeId)
+    if (hasValue(item)) {
+      const newSeed = generateSeed()
+      const obj = makeSarcastic(item.rawValue, newSeed);
+      navigator.clipboard.writeText(obj);
+      setNotificationOpen(true)
+      const newItems = [...items].map(item => {
+        if (item.id === activeId) {
+          return {
+            id: item.id,
+            rawValue: item.rawValue,
+            seed: newSeed
+          }
+        }
+        return item
+      })
+      setItems(newItems);
+    }
+  }
+
+  const handleKPress = () => {
+    console.log('We fire the shortcutmenu')
+    setShortcutMenuOpen(old => !old)
+  }
+
+  const handleCmdEnterPress = () => {
+    setShortcutMenuOpen(false)
+    console.log('We fire the Copy')
+    const item = items.find(item => item.id === activeId)
+    if (hasValue(item)) {
+      const obj = makeSarcastic(item.rawValue, item.seed);
+      navigator.clipboard.writeText(obj);
+      setNotificationOpen(true)
+    }
+  }
+  const handleUpPress = () => {
+    console.log('We fire the ArrowUp')
+    runArrowUp();
+  }
+  const handleDownPress = () => {
+    console.log('We fire the ArrowDown')
+    runArrowDown();
+  }
+
+  const keys = {
+    handleCmdEnterPress: handleCmdEnterPress,
+    handleEnterPress: handleEnterPress,
+    handleSlashPress: handleSlashPress,
+    handleKPress: handleKPress,
+    handleUpPress: handleUpPress,
+    handleDownPress: handleDownPress,
+  }
 
   const handleKeyPress = React.useCallback((event) => {
     // console.log(event.code)
     if ((event.metaKey || event.ctrlKey) && event.code === 'Enter') {
-      console.log('We fire the Sarcasm')
-      if (value.length > 0) {
-        const newId = makeId(10)
-        const newSeed = generateSeed()
-        const obj = makeSarcastic(value, newSeed);
-        navigator.clipboard.writeText(obj);
-        props.notification()
-
-        setItems([{
-          id: newId ?? '',
-          rawValue: value,
-          seed: newSeed
-        }, ...items]);
-        setValue('')
-      }
-    } else if ((event.metaKey || event.ctrlKey) && event.code === 'Slash') {
-      console.log('We fire the ReSarcasm')
       event.preventDefault();
-      const item = items.find(item => item.id === activeId)
-      if (hasValue(item)) {
-        const newSeed = generateSeed()
-        const obj = makeSarcastic(item.rawValue, newSeed);
-        navigator.clipboard.writeText(obj);
-        props.notification()
-
-
-        const newItems = [...items].map(item => {
-
-          if (item.id === activeId) {
-            return {
-              id: item.id,
-              rawValue: item.rawValue,
-              seed: newSeed
-            }
-          }
-
-          return item
-        })
-
-        setItems(newItems);
-
-      }
+      keys.handleCmdEnterPress()
+    } else if ((event.metaKey || event.ctrlKey) && event.code === 'Slash') {
+      event.preventDefault();
+      keys.handleSlashPress()
+    } else if ((event.metaKey || event.ctrlKey) && event.code === 'KeyK') {
+      event.preventDefault();
+      keys.handleKPress();
     } else if (event.code === 'Enter') {
-      console.log('We fire the Copy')
-      const item = items.find(item => item.id === activeId)
-      if (hasValue(item)) {
-        const obj = makeSarcastic(item.rawValue, item.seed);
-        navigator.clipboard.writeText(obj);
-        props.notification()
-      }
+      event.preventDefault();
+      keys.handleEnterPress();
     } else if (event.code === 'ArrowUp') {
-      console.log('We fire the ArrowUp')
       event.preventDefault()
-      runArrowUp();
+      keys.handleUpPress()
     } else if (event.code === 'ArrowDown') {
-      console.log('We fire the ArrowDown')
       event.preventDefault()
-      runArrowDown()
+      keys.handleDownPress()
     }
   }, [value, activeId]);
 
@@ -109,6 +155,7 @@ const Sarcasmonizer = (props: Props) => {
   }, [handleKeyPress]);
 
   const handleChange = (e: any) => {
+    setShortcutMenuOpen(false)
     setActiveId(makeId(10))
     setValue(e.target.value);
   };
@@ -123,55 +170,34 @@ const Sarcasmonizer = (props: Props) => {
     }
   }, [])
 
+
+  const windowSize = useWindowSize();
+
+  const input = React.useRef<HTMLInputElement>(null)
   // React.useEffect(() => {
-  //   const sarcasmizer = (value: string) => {
-  //     let tuple:[string | null, number | null] = [null, null];
-  //     return value
-  //       .split("")
-  //       .map((val: string) => {
-  //         const shouldLowercase: boolean = Math.floor(Math.random() * 10) >= 5;
-  //         const [type, amount] = tuple
-  //         if(val === ' '){
-  //           return val
-  //         }
-  //         if(tuple === [null,null]){
-  //            if(shouldLowercase){
-  //              tuple = ['l', 1]
-  //              return val.toLowerCase()
-  //         }
-  //         if(!shouldLowercase){
-  //           tuple = ['u', 1]
-  //         }
-  //         return val.toUpperCase()
-  //         }
-  //         if((type === 'l' && amount !== null && amount > 2) && shouldLowercase){
-  //           tuple = ['u', 1]
-  //           return val.toUpperCase()
-  //         }
-  //         if((type === 'u' && amount !== null && amount > 2) && !shouldLowercase){
-  //           tuple = ['l', 1]
-  //           return val.toLowerCase()
-  //         }
-  //         if(shouldLowercase){
-  //           tuple = ['l', amount !== null ? amount+1 : 1]
-  //           return val.toLowerCase()
-  //         }
-  //         if(!shouldLowercase){
-  //           tuple = ['u', amount !== null ? amount+1 : 1]
-  //           return val.toUpperCase()
-  //         }
+  //   if (document.activeElement !== input.current) {
+  //     input.current!.focus()
+  //   }
+  // }, [document.activeElement])
 
-  //       })
-  //       .join("");
-  //   };
 
-  //   setValue(sarcasmizer(value));
-  // }, [active]);
+  React.useEffect(() => {
+    setShortcutMenuOpen(false)
+  }, [windowSize.isDesktop])
 
   return (
     <div className='content'>
       <form onSubmit={handleSubmit} method='post'>
-        <input autoFocus type='text' tabIndex={1} placeholder="Write something and make it look saRcAstiC" value={value} onChange={handleChange} />
+        <input
+          ref={input}
+          autoFocus
+          type='text'
+          tabIndex={1}
+          placeholder="Write something and make it look saRcAstiC"
+          value={value}
+          onChange={handleChange}
+          onBlur={() => input.current!.focus()}
+        />
       </form>
       <div className='history'>
         <div className='raw'>
@@ -182,7 +208,7 @@ const Sarcasmonizer = (props: Props) => {
               {Object.entries(items).map((item: [string, SarcasticValue]) => {
                 const [key, value] = item;
                 return (
-                  <li key={key} className={activeId === value.id ? 'is-active' : ''}>
+                  <li key={key} className={activeId === value.id ? 'is-active' : ''} onClick={() => setActiveId(value.id)}>
                     {value.rawValue}
                   </li>
                 )
@@ -203,17 +229,18 @@ const Sarcasmonizer = (props: Props) => {
           }
         </div>
       </div>
-      <Shortcuts disableExtra={items.filter(item => item.id === activeId).length === 0} />
+      <Shortcuts disableAll={value.length === 0} keys={keys} shortcutMenuOpen={shortcutMenuOpen && !windowSize.isDesktop} disableExtra={items.filter(item => item.id === activeId).length === 0} />
       <Authors />
+      <NotificationElement open={notificationOpen} />
     </div>
   );
 };
 
-export default function App(props: Props) {
+export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Sarcasmonizer notification={props.notification} />} />
+        <Route path="/" element={<Sarcasmonizer />} />
       </Routes>
     </Router>
   );
