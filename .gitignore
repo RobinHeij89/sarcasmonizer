@@ -46,3 +46,5 @@ yarn-error.log*
 # vscode
 .vscode/
 
+release/build/mac
+release/build/mac-arm64

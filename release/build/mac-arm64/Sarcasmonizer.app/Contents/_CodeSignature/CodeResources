@@ -14,7 +14,7 @@
 		</data>
 		<key>Resources/app.asar</key>
 		<data>
-		Zo0+7sxb1haA8n5LRA4kzEcLxc4=
+		olXnJjh1JesXoxEPLCanUpQA5rQ=
 		</data>
 		<key>Resources/assets/assets.d.ts</key>
 		<data>
@@ -83,7 +83,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			RuuJVh26q7rCKkbtxoWa3kFypXQ=
+			ricPpA/leHa49qZRO4+QxQwOp+8=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.github.Electron.framework" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: rooobiin89@gmail.com (HWZMV5K23J)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
@@ -110,7 +110,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			0UWo5uMoh9eHZ+wp+p+hjLO2Z9c=
+			RR7navRDuQsZL9O4UIEWhHorBOQ=
 			</data>
 			<key>requirement</key>
 			<string>identifier "org.erb.Sarcasmonizer.helper.GPU" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: rooobiin89@gmail.com (HWZMV5K23J)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
@@ -119,7 +119,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			1HX6qrWmT1JR0HmF76UB9jygjcg=
+			P5vl9L/F5JzV717l1yMs//Qlu4A=
 			</data>
 			<key>requirement</key>
 			<string>identifier "org.erb.Sarcasmonizer.helper.Plugin" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: rooobiin89@gmail.com (HWZMV5K23J)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
@@ -128,7 +128,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			CPE0J9/V7Sexlj70f3MZv8perUY=
+			MQwkoC4EQGQkmvTCGRPdpU7pQeg=
 			</data>
 			<key>requirement</key>
 			<string>identifier "org.erb.Sarcasmonizer.helper.Renderer" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: rooobiin89@gmail.com (HWZMV5K23J)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
@@ -137,7 +137,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			2g1qRSzS5i5OYtr7429ms6nhCi8=
+			oiZJXFFp1dj5eg8PV/8fbdeEAe8=
 			</data>
 			<key>requirement</key>
 			<string>identifier "org.erb.Sarcasmonizer.helper" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: rooobiin89@gmail.com (HWZMV5K23J)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
@@ -146,7 +146,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			CdacRR2UO04DIYcbklZklPU2BN4=
+			wB/Is+DZk5hS4Hm6B9GqzMF/kMM=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.github.Squirrel" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: rooobiin89@gmail.com (HWZMV5K23J)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
@@ -169,7 +169,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			77ql9gzDbM1yzNqmbpYc8K2We8djV3YXMP919wV6/zc=
+			uHrItgrb+VPbOdWU0RBopT12qftwIpI7OXmAGgld5DM=
 			</data>
 		</dict>
 		<key>Resources/assets/assets.d.ts</key>
