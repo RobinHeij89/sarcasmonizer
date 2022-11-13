@@ -136,8 +136,7 @@ ul.menu-shortcuts > li {
 
 
 .pointer{
-  cursor: pointer;
-
+  cursor: default;
 }
 
 .pointer:hover{
@@ -151,7 +150,7 @@ ul.menu-shortcuts > li {
 }
 
 .disabled .pointer{
-  cursor: unset;
+  pointer-events: none;
 }
 
 .disabled .pointer:hover{

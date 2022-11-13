@@ -174,7 +174,6 @@ input[type='text']:focus{
 
 .raw li:hover{
   background: var(--background-li-hover);
-  cursor:pointer;
   border-radius: 8px;
 }
 

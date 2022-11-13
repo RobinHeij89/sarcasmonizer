@@ -92,12 +92,12 @@
     "publish": {
       "provider": "github",
       "owner": "RobinHeij89",
-      "repo": "sarcasmonizr"
+      "repo": "sarcasmonizer"
     }
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/RobinHeij89/sarcasmonizr.git"
+    "url": "https://github.com/RobinHeij89/sarcasmonizer.git"
   },
   "author": {
     "name": "Robin Heij",
@@ -106,13 +106,13 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/RobinHeij89/sarcasmonizr/issues"
+    "url": "https://github.com/RobinHeij89/sarcasmonizer/issues"
   },
   "keywords": [
     "sarcasmonizer",
     "sarcasm"
   ],
-  "homepage": "https://github.com/RobinHeij89/sarcasmonizr/#readme",
+  "homepage": "https://github.com/RobinHeij89/sarcasmonizer/#readme",
   "jest": {
     "testURL": "http://localhost/",
     "testEnvironment": "jsdom",

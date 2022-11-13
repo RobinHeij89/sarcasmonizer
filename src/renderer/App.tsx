@@ -9,15 +9,11 @@ import { NoHistory } from './NoHistory/Component';
 import { NotificationElement } from './Notification/Component';
 import { Shortcuts } from './Shortcuts/Component';
 
-
-
 interface SarcasticValue {
   id: string
   rawValue: string
   seed: boolean[]
 }
-
-
 
 const Sarcasmonizer = () => {
   const [value, setValue] = React.useState("");
@@ -156,7 +152,6 @@ const Sarcasmonizer = () => {
 
   const handleChange = (e: any) => {
     setShortcutMenuOpen(false)
-    setActiveId(makeId(10))
     setValue(e.target.value);
   };
 
@@ -208,7 +203,15 @@ const Sarcasmonizer = () => {
               {Object.entries(items).map((item: [string, SarcasticValue]) => {
                 const [key, value] = item;
                 return (
-                  <li key={key} className={activeId === value.id ? 'is-active' : ''} onClick={() => setActiveId(value.id)}>
+                  <li 
+                    key={key} 
+                    className={activeId === value.id ? 'is-active' : ''} 
+                    onClick={() => setActiveId(value.id)}
+                    onDoubleClick={() => {
+                      setActiveId(value.id)
+                      keys.handleCmdEnterPress()
+                    }}
+                  >
                     {value.rawValue}
                   </li>
                 )
@@ -229,7 +232,7 @@ const Sarcasmonizer = () => {
           }
         </div>
       </div>
-      <Shortcuts disableAll={value.length === 0} keys={keys} shortcutMenuOpen={shortcutMenuOpen && !windowSize.isDesktop} disableExtra={items.filter(item => item.id === activeId).length === 0} />
+      <Shortcuts disableAll={value.length === 0} keys={keys} shortcutMenuOpen={shortcutMenuOpen && !windowSize.isDesktop} disableExtra={items.filter(item => item.id === activeId).length === 0} disableControls={items.length === 0}/>
       <Authors />
       <NotificationElement open={notificationOpen} />
     </div>

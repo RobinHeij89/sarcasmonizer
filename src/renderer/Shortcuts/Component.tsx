@@ -6,6 +6,7 @@ import './style.css';
 interface Props {
   disableAll: boolean
   disableExtra: boolean
+  disableControls: boolean
   shortcutMenuOpen: boolean
   keys: {
     handleCmdEnterPress: () => void
@@ -17,7 +18,7 @@ interface Props {
   }
 }
 
-export const Shortcuts = ({ disableAll, disableExtra, shortcutMenuOpen, keys }: Props) => {
+export const Shortcuts = ({ disableAll, disableExtra, disableControls, shortcutMenuOpen, keys }: Props) => {
   const ref = React.useRef<HTMLUListElement>(null)
   const returnHeight = (): number => {
     if (ref.current) {
@@ -46,7 +47,7 @@ export const Shortcuts = ({ disableAll, disableExtra, shortcutMenuOpen, keys }: 
       <div className='bg-shortcuts' />
       <animated.ul style={props} className='menu-shortcuts' ref={ref}>
         <li onClick={() => keys.handleEnterPress()} className={hasValue(disableAll) && disableAll ? 'disabled' : 'pointer'}>
-          Make sarcastic & copy
+          Sarcasmonize & copy
           <span className='group'>
             <span className='key'>↩</span>
           </span>
@@ -65,8 +66,8 @@ export const Shortcuts = ({ disableAll, disableExtra, shortcutMenuOpen, keys }: 
             <span className='key'>/</span>
           </span>
         </li>
-        <li className={hasValue(disableExtra) && disableExtra ? 'disabled' : ''}>
-          Move up / down in list
+        <li className={hasValue(disableControls) && disableControls ? 'disabled' : ''}>
+          Move through list
           <span className='group'>
             <span onClick={() => keys.handleDownPress()} className='key pointer'>↓</span>
             <span onClick={() => keys.handleUpPress()} className='key pointer'>↑</span>
@@ -84,8 +85,8 @@ export const Shortcuts = ({ disableAll, disableExtra, shortcutMenuOpen, keys }: 
         </li>
       </ul >
       <ul className='full-shortcuts'>
-        <li className={hasValue(disableExtra) && disableExtra ? 'disabled' : ''}>
-          Move up / down in list
+        <li className={hasValue(disableControls) && disableControls ? 'disabled' : ''}>
+          Move through list
           <span className='group'>
             <span onClick={() => keys.handleDownPress()} className='key pointer'>↓</span>
             <span onClick={() => keys.handleUpPress()} className='key pointer'>↑</span>
@@ -112,7 +113,7 @@ export const Shortcuts = ({ disableAll, disableExtra, shortcutMenuOpen, keys }: 
         <li className='divider' />
 
         <li onClick={() => keys.handleEnterPress()} className={hasValue(disableAll) && disableAll ? 'disabled' : 'pointer'}>
-          Make sarcastic & copy
+          Sarcasmonize & copy
           <span className='group'>
             <span className='key'>↩</span>
           </span>

@@ -19,7 +19,7 @@ import { resolveHtmlPath } from './util';
 
 // require('update-electron-app')()
 require('update-electron-app')({
-  repo: 'https://github.com/RobinHeij89/sarcasmonizr',
+  repo: 'https://github.com/RobinHeij89/sarcasmonizer',
   updateInterval: '1 hour',
   logger: require('electron-log')
 })

@@ -3,7 +3,7 @@ import App from './App';
 
 // function doNotify() {
 //   Notification.requestPermission().then(function (result) {
-//     const notification = new Notification('Sarcasmonizr', {
+//     const notification = new Notification('SaRcaSmOnIZEr', {
 //       'body': 'Paste your text anywere, we put it on your clipboard',
 //       'icon': 'whatever'
 //     })
