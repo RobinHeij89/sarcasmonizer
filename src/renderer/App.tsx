@@ -32,6 +32,11 @@ const Sarcasmonizer = () => {
     return () => { }
   }, [notificationOpen]);
 
+  const handleDeleteStorage = () => {
+    console.log('We fire the DeleteStorage')
+    setItems([]);
+  }
+
   const handleEnterPress = () => {
     console.log('We fire the Sarcasm')
     setShortcutMenuOpen(false)
@@ -106,6 +111,7 @@ const Sarcasmonizer = () => {
     handleKPress: handleKPress,
     handleUpPress: handleUpPress,
     handleDownPress: handleDownPress,
+    handleDeleteStorage: handleDeleteStorage
   }
 
   const handleKeyPress = React.useCallback((event) => {
@@ -113,6 +119,9 @@ const Sarcasmonizer = () => {
     if ((event.metaKey || event.ctrlKey) && event.code === 'Enter') {
       event.preventDefault();
       keys.handleCmdEnterPress()
+    } if ((event.metaKey || event.ctrlKey) && event.code === 'KeyF') {
+      event.preventDefault();
+      keys.handleDeleteStorage()
     } else if ((event.metaKey || event.ctrlKey) && event.code === 'Slash') {
       event.preventDefault();
       keys.handleSlashPress()
@@ -203,9 +212,9 @@ const Sarcasmonizer = () => {
               {Object.entries(items).map((item: [string, SarcasticValue]) => {
                 const [key, value] = item;
                 return (
-                  <li 
-                    key={key} 
-                    className={activeId === value.id ? 'is-active' : ''} 
+                  <li
+                    key={key}
+                    className={activeId === value.id ? 'is-active' : ''}
                     onClick={() => setActiveId(value.id)}
                     onDoubleClick={() => {
                       setActiveId(value.id)
@@ -232,7 +241,7 @@ const Sarcasmonizer = () => {
           }
         </div>
       </div>
-      <Shortcuts disableAll={value.length === 0} keys={keys} shortcutMenuOpen={shortcutMenuOpen && !windowSize.isDesktop} disableExtra={items.filter(item => item.id === activeId).length === 0} disableControls={items.length === 0}/>
+      <Shortcuts disableAll={value.length === 0} keys={keys} shortcutMenuOpen={shortcutMenuOpen && !windowSize.isDesktop} disableExtra={items.filter(item => item.id === activeId).length === 0} disableControls={items.length === 0} />
       <Authors />
       <NotificationElement open={notificationOpen} />
     </div>
