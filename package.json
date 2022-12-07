@@ -2,7 +2,6 @@
   "name": "sarcasmonizer",
   "version": "0.0.2",
   "description": "Let others know you're sarcastic, without hassle",
-  
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
     "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
@@ -209,6 +208,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "@octokit/rest": "^19.0.5",
     "clsx": "^1.2.1",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.4",

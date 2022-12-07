@@ -1,5 +1,6 @@
 import { render } from 'react-dom';
 import App from './App';
+import { Octokit } from "@octokit/rest";
 
 // function doNotify() {
 //   Notification.requestPermission().then(function (result) {
@@ -9,5 +10,13 @@ import App from './App';
 //     })
 //   });
 // }
+
+const octokit = new Octokit();
+octokit.rest.repos.getLatestRelease({
+  owner: "RobinHeij89",
+  repo: "sarcasmonizer",
+}).then((result) => {
+  console.log(result);
+}, () => { });
 
 render(<App />, document.getElementById('root'));
